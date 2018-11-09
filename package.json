@@ -1,0 +1,21 @@
+{
+  "name": "soar-gui",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "ten",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^3.0.6"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "js-yaml": "^3.12.0",
+    "node-cmd": "^3.0.0",
+    "showdown": "^1.8.7",
+    "vue": "^2.5.17"
+  }
+}

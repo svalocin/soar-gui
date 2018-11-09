@@ -1,0 +1,6 @@
+online-dsn:
+  addr: ''
+  schema: ''
+  user: ''
+  password: ''
+  disable: false
