@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "github-markdown-css": "^2.10.0",
     "iview": "^3.1.5",
     "node-cmd": "^3.0.0",
     "showdown": "^1.9.0",

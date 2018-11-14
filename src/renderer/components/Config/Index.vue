@@ -1,5 +1,5 @@
 <template>
-  <Drawer title="配置" v-model="display" width="300" :mask-closable="false" :styles="styles.main" @on-close="display = false" @on-visible-change="change">
+  <Drawer title="配置" v-model="display" width="300" :styles="styles.main" @on-close="display = false" @on-visible-change="change">
     <div>
       <Form>
         <Dsn type="Online"></Dsn>

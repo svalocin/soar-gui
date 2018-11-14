@@ -3,7 +3,9 @@
     <Layout>
       <Header class="layout-header">
         <img src="../assets/logo.png" class="layout-header-logo">
-        <Button type="primary" class="layout-header-config" @click="displayConfigDrawer">配置</Button>
+        <Button class="layout-header-config" @click="displayConfigDrawer">
+          <Icon type="md-settings" size="20" />
+        </Button>
         <Config></Config>
       </Header>
 
@@ -15,7 +17,8 @@
           <p slot="title">
             输出结果
           </p>
-          <div class="layout-content-out-content" v-html="out"></div>
+          <article class="layout-content-out-content markdown-body" v-html="out">
+          </article>
         </Card>
       </Content>
     </Layout>
@@ -26,6 +29,8 @@
   import Config from "./Config/Index";
   import soar from "../common/soar.js";
   import showdown from "showdown";
+
+  import "github-markdown-css/github-markdown.css";
 
   export default {
     name: "index",
@@ -42,13 +47,24 @@
         console.log(this.$store.state.layout.displayConfigDrawer);
       },
       query() {
+        if (this.sql == null || this.sql.trim().length == 0) {
+          this.$Message.warning({
+            content: "请输入 SQL 语句",
+            duration: 3
+          });
+          this.sql = "";
+          return;
+        }
+
         soar.query(
           this.sql,
           out => {
             let i = out.indexOf("# Query:");
             out = out.substring(i);
+            debugger;
 
             let converter = new showdown.Converter();
+            converter.setFlavor("github");
             let html = converter.makeHtml(out);
             this.out = html;
           },
@@ -78,7 +94,7 @@
     height: 120px;
     float: left;
     top: -21px;
-    left: -108px;
+    left: -98px;
   }
 
   .layout-header-config {
