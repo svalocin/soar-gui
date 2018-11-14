@@ -1,0 +1,115 @@
+<template>
+  <div class="layout">
+    <Layout>
+      <Header class="layout-header">
+        <img src="../assets/logo.png" class="layout-header-logo">
+        <Button type="primary" class="layout-header-config" @click="displayConfigDrawer">配置</Button>
+        <Config></Config>
+      </Header>
+
+      <Content class="layout-content">
+        <Input type="textarea" class="layout-content-sql" v-model="sql" :autosize="{ maxRows: 5, minRows: 5 }" placeholder="Enter SQL..." />
+        <Button type="primary" class="layout-content-query" @click="query()" :style="{  }">查询</Button>
+
+        <Card class="layout-content-out" shadow>
+          <p slot="title">
+            输出结果
+          </p>
+          <div class="layout-content-out-content" v-html="out"></div>
+        </Card>
+      </Content>
+    </Layout>
+  </div>
+</template>
+
+<script>
+  import Config from "./Config/Index";
+  import soar from "../common/soar.js";
+  import showdown from "showdown";
+
+  export default {
+    name: "index",
+    components: { Config },
+    data() {
+      return {
+        sql: "",
+        out: ""
+      };
+    },
+    methods: {
+      displayConfigDrawer() {
+        this.$store.dispatch("changeDisplayConfigDrawer");
+        console.log(this.$store.state.layout.displayConfigDrawer);
+      },
+      query() {
+        soar.query(
+          this.sql,
+          out => {
+            let i = out.indexOf("# Query:");
+            out = out.substring(i);
+
+            let converter = new showdown.Converter();
+            let html = converter.makeHtml(out);
+            this.out = html;
+          },
+          error => {
+            console.error(error);
+          }
+        );
+      }
+    },
+    computed: {}
+  };
+</script>
+
+<style scoped>
+  .layout,
+  .ivu-layout {
+    height: 100%;
+  }
+
+  .layout-header {
+    background: #e8eaec;
+  }
+
+  .layout-header-logo {
+    height: 44px;
+    float: left;
+    position: relative;
+    top: 10px;
+    left: 20px;
+  }
+
+  .layout-header-config {
+    height: 34px;
+    float: right;
+    position: relative;
+    top: 15px;
+    right: 20px;
+  }
+
+  .layout-content {
+    margin: 20px 20px 20px 20px;
+  }
+
+  .layout-content-sql {
+    width: calc(100% - 105px);
+    resize: none;
+  }
+
+  .layout-content-query {
+    width: 95px;
+    height: 115px;
+    float: right;
+    margin-left: 10px;
+  }
+
+  .layout-content-out {
+    margin-top: 10px;
+  }
+
+  .layout-content-out-content {
+    overflow: auto;
+    height: 258px;
+  }
+</style>

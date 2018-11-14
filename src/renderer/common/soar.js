@@ -7,7 +7,10 @@ console.log(soarPath);
 const yamlPath = path.resolve('./soar/soar.yaml');
 console.log(yamlPath);
 
-exports.soar = {
+export default {
+    soarPath: soarPath,
+    yamlPath: yamlPath,
+
     query(sql, out, error) {
         sql = sql.replace(new RegExp('\r\n', "g"), " ").replace(new RegExp('\r', "g"), " ").replace(new RegExp('\n', "g"), " ");
 
