@@ -86,7 +86,6 @@
     float: right;
     position: relative;
     top: 15px;
-    right: 20px;
   }
 
   .layout-content {
