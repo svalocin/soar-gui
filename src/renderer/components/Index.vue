@@ -73,11 +73,12 @@
   }
 
   .layout-header-logo {
-    height: 44px;
+    position: absolute;
+    clip: rect(34px 293px 72px 148px);
+    height: 120px;
     float: left;
-    position: relative;
-    top: 10px;
-    left: 20px;
+    top: -21px;
+    left: -108px;
   }
 
   .layout-header-config {
