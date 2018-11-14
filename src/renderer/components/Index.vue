@@ -17,7 +17,7 @@
           <p slot="title">
             输出结果
           </p>
-          <article class="layout-content-out-content markdown-body" v-html="out">
+          <article class="layout-content-out-content markdown-body" v-html="out" ref="out">
           </article>
         </Card>
       </Content>
@@ -40,6 +40,10 @@
         sql: "",
         out: ""
       };
+    },
+    mounted() {
+      let out = this.$refs.out;
+      out.parentElement.style.padding = "0px";
     },
     methods: {
       displayConfigDrawer() {
@@ -125,7 +129,10 @@
   }
 
   .layout-content-out-content {
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: auto;
     height: 258px;
+    padding-left: 20px;
+    padding-right: 10px;
   }
 </style>
