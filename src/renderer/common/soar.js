@@ -14,8 +14,8 @@ export default {
     query(sql, out, error) {
         sql = sql.replace(new RegExp('\r\n', "g"), " ").replace(new RegExp('\r', "g"), " ").replace(new RegExp('\n', "g"), " ");
 
-        let str = "\"" + soarPath + "\" -config '" + yamlPath + "' -query \"" + sql + "\"";
-        console.log('cmd:', str);
+        let str = `"${soarPath}" -config "${yamlPath}" -query "${sql}"`;
+        console.log('cmd: ', str);
 
         cmd.get(
             str,

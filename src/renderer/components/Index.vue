@@ -13,11 +13,11 @@
         <Input type="textarea" class="layout-content-sql" v-model="sql" :autosize="{ maxRows: 5, minRows: 5 }" placeholder="Enter SQL..." />
         <Button type="primary" class="layout-content-query" @click="query()" :style="{  }">查询</Button>
 
-        <Card class="layout-content-out" shadow>
+        <Card ref="card" class="layout-content-out" shadow>
           <p slot="title">
             输出结果
           </p>
-          <article class="layout-content-out-content markdown-body" v-html="out" ref="out">
+          <article class="layout-content-out-content markdown-body" v-html="out">
           </article>
         </Card>
       </Content>
@@ -42,8 +42,7 @@
       };
     },
     mounted() {
-      let out = this.$refs.out;
-      out.parentElement.style.padding = "0px";
+      this.$refs.card.$el.querySelector(".ivu-card-body").style.padding = "0px";
     },
     methods: {
       displayConfigDrawer() {
@@ -65,7 +64,6 @@
           out => {
             let i = out.indexOf("# Query:");
             out = out.substring(i);
-            debugger;
 
             let converter = new showdown.Converter();
             converter.setFlavor("github");
