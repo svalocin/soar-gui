@@ -3,6 +3,19 @@
     <div>
       <Form>
         <Dsn type="Online"></Dsn>
+        <Dsn type="Test"></Dsn>
+        <FormItem label="Allow online as test">
+          <i-switch v-model="allowOnlineAsTest" size="large">
+            <span slot="open"></span>
+            <span slot="close"></span>
+          </i-switch>
+        </FormItem>
+        <FormItem label="Drop test temporary">
+          <i-switch v-model="dropTestTemporary" size="large">
+            <span slot="open"></span>
+            <span slot="close"></span>
+          </i-switch>
+        </FormItem>
       </Form>
     </div>
     <div :style="styles.footer">
@@ -47,6 +60,22 @@
         set(value) {
           if (this.$store.state.layout.displayConfigDrawer === value) return;
           this.$store.dispatch("changeDisplayConfigDrawer");
+        }
+      },
+      allowOnlineAsTest: {
+        get() {
+          return this.$store.state.config["allow-online-as-test"];
+        },
+        set(value) {
+          this.$store.dispatch("setAllowOnlineAsTest", value);
+        }
+      },
+      dropTestTemporary: {
+        get() {
+          return this.$store.state.config["drop-test-temporary"];
+        },
+        set(value) {
+          this.$store.dispatch("setDropTestTemporary", value);
         }
       }
     },
