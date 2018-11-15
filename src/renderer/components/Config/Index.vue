@@ -81,12 +81,20 @@
     },
     methods: {
       save() {
-        this.$store.dispatch("writeConfig");
-        this.display = false;
+        try {
+          this.$store.dispatch("writeConfig");
+          this.display = false;
+        } catch (e) {
+          this.$helper.handleError(e);
+        }
       },
       change(display) {
-        if (!display) return;
-        this.$store.dispatch("readConfig");
+        try {
+          if (!display) return;
+          this.$store.dispatch("readConfig");
+        } catch (e) {
+          this.$helper.handleError(e);
+        }
       }
     }
   };

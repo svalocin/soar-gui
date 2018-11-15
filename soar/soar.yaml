@@ -1,14 +1,14 @@
 online-dsn:
-  addr: '254254254'
-  schema: '254254'
-  user: '254254254'
-  password: '5454254'
-  disable: true
+  addr: ''
+  schema: ''
+  user: ''
+  password: ''
+  disable: false
 test-dsn:
-  addr: '44114'
-  schema: '254545'
-  user: '5425425454'
-  password: '254254254'
-  disable: true
-allow-online-as-test: true
-drop-test-temporary: true
+  addr: ''
+  schema: ''
+  user: ''
+  password: ''
+  disable: false
+allow-online-as-test: false
+drop-test-temporary: false

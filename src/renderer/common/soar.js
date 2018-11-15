@@ -11,7 +11,7 @@ export default {
     soarPath: soarPath,
     yamlPath: yamlPath,
 
-    query(sql, out, error) {
+    query(sql, output, error) {
         sql = sql.replace(new RegExp('\r\n', "g"), " ").replace(new RegExp('\r', "g"), " ").replace(new RegExp('\n', "g"), " ");
 
         let str = `"${soarPath}" -config "${yamlPath}" -query "${sql}"`;
@@ -23,7 +23,9 @@ export default {
                 if (err) {
                     error(stderr);
                 } else {
-                    out(stdout);
+                    let i = stdout.indexOf("# Query:");
+                    stdout = stdout.substring(i);
+                    output(stdout);
                 }
             }
         );

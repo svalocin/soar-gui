@@ -6,12 +6,14 @@ import 'iview/dist/styles/iview.css';
 import App from './App'
 import router from './router'
 import store from './store'
+import helper from './common/helper'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 Vue.use(iView);
+Vue.use(helper);
 
 /* eslint-disable no-new */
 new Vue({
