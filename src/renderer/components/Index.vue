@@ -2,11 +2,13 @@
   <div class="layout">
     <Layout>
       <Menu ref="menu" mode="horizontal" theme="light" active-name="review" @on-select="selectMenu">
-        <img src="../assets/logo.png" class="layout-menu-logo">
+        <!-- <img src="../assets/logo.png" class="layout-menu-logo"> -->
         <div class="layout-menu-nav">
           <MenuItem name="review">评审</MenuItem>
           <MenuItem name="rewrite">SQL 重写</MenuItem>
-          <MenuItem name="analyze">EXPLAIN 分析</MenuItem>
+          <!-- <MenuItem name="analyze">EXPLAIN 分析</MenuItem> -->
+        </div>
+        <div class="layout-menu-nav-btn">
           <ButtonGroup size="small" class="layout-menu-btn">
             <Button icon="md-settings" @click="displayConfigDrawer"></Button>
           </ButtonGroup>
@@ -37,6 +39,7 @@
   import "github-markdown-css/github-markdown.css";
 
   import Config from "./Config/Index";
+  import helper from "../common/helper.js";
 
   export default {
     name: "index",
@@ -48,7 +51,8 @@
         output: "",
         cache: {
           currentMenuName: "review",
-          inputs: {}
+          inputs: {},
+          outputs: {}
         }
       };
     },
@@ -63,12 +67,20 @@
       selectMenu(name) {
         if (this.cache.currentMenuName !== name) {
           this.cache.inputs[this.cache.currentMenuName] = this.input;
+          this.cache.outputs[this.cache.currentMenuName] = this.output;
 
           let cacheInput = this.cache.inputs[name];
           if (cacheInput != undefined && cacheInput != null) {
             this.input = cacheInput;
           } else {
             this.input = "";
+          }
+
+          let cacheOutput = this.cache.outputs[name];
+          if (cacheOutput != undefined && cacheOutput != null) {
+            this.output = cacheOutput;
+          } else {
+            this.output = "";
           }
 
           this.cache.currentMenuName = name;
@@ -106,20 +118,27 @@
             func = soar.query;
             break;
           case "rewrite":
+            func = soar.rewrite;
             break;
           case "analyze":
+            func = soar.explain;
             break;
           default:
             break;
         }
         if (func == null) {
-          this.$Message.error("无法执行该操作");
+          this.$Message.warning("无法执行该操作");
           return;
         }
 
         func(
           this.input,
           output => {
+            if (helper.isEmpty(output)) {
+              this.$Message.info("输出结果为空");
+              return;
+            }
+
             let converter = new showdown.Converter();
             converter.setFlavor("github");
             let html = converter.makeHtml(output);
@@ -154,7 +173,7 @@
     left: -109px;
   }
 
-  .layout-menu-nav {
+  .layout-menu-nav-btn {
     float: right;
   }
 
